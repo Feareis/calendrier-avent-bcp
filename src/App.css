@@ -1,38 +1,182 @@
-.App {
+/* Couleur de fond général */
+body {
+  background-color: #d3e7f3; /* Bleu clair pour un effet doux et festif */
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  color: #3e4e50;
+}
+
+/* Conteneur principal */
+.page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100vh;
   text-align: center;
+  padding: 0 20px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* Conteneur du titre */
+.title-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  height: 25vh;
+}
+
+/* Titre principal */
+.page-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #3e4e50; /* Couleur neutre pour le texte */
+  margin: 0;
+}
+
+/* Texte pour le compte à rebours */
+.time-remaining {
+  font-size: 1.2rem;
+  color: #6d6d6d;
+  margin-top: 10px;
+}
+
+/* Conteneur de la maison */
+.house-container {
+  position: relative;
+  width: 90%;
+  max-width: 400px;
+  background: #ffffff; /* Fond blanc pour le corps de la maison */
+  border-radius: 0 0 15px 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Ombre subtile */
+  padding: 20px;
+  margin-top: -50px;
+  overflow: hidden;
+}
+
+/* Toit de la maison */
+.house-container::before {
+  content: "";
+  position: absolute;
+  top: -80px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 200px solid transparent;
+  border-right: 200px solid transparent;
+  border-bottom: 80px solid #8fc59b; /* Vert léger pour le toit */
+  z-index: 1;
+}
+
+/* Contenu du calendrier */
+.calendar-container {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+  justify-items: center;
+  align-items: center;
+}
+
+/* Style des jours */
+.day {
+  font-size: 24px;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  background-color: #f9e79f; /* Jaune doux */
+}
+
+.day.active {
+  background-color: #8fc59b; /* Vert doux pour les jours actifs */
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.day.opened {
+  background-color: #f8c2c2; /* Rouge doux pour les jours ouverts */
+  color: #fff;
+  transform: scale(0.9);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.day.inactive {
+  background-color: #e5e5e5; /* Gris pour les jours inactifs */
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+.day:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Cadeau animé */
+.gift {
+  position: fixed;
+  bottom: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 80px;
+  animation: gift-move 1s ease-in-out;
+}
+
+@keyframes gift-move {
+  0% {
+    bottom: -100px;
   }
-  to {
-    transform: rotate(360deg);
+  50% {
+    bottom: 50%;
   }
+  100% {
+    bottom: -100px;
+    opacity: 0;
+  }
+}
+
+/* Surprise affichée sous la maison */
+.surprise {
+  font-size: 1.5rem;
+  color: #3e4e50; /* Couleur neutre pour contraste */
+  margin-top: 50px;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Pop-up */
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  animation: popup-appear 0.5s ease-out forwards;
+  z-index: 10;
+}
+
+@keyframes popup-appear {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -60%);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+/* Footer */
+.footer {
+  margin-top: auto; /* Pousse le footer vers le bas */
+  padding: 10px 0;
+  text-align: center;
+  color: #6d6d6d;
+  font-size: 1rem;
 }
