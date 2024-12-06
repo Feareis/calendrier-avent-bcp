@@ -1,39 +1,39 @@
 import React, { useState, useEffect, useCallback } from "react";
-import Cookies from "js-cookie"; // Import de la bibliothèque pour les cookies
+import Cookies from "js-cookie"; // Gestion des cookies
 import "./App.css";
 
 const Calendar = () => {
   const today = new Date().getDate(); // Jour actuel
-  const [opened, setOpened] = useState([]);
-  const [selectedDay, setSelectedDay] = useState(null);
-  const [timeRemaining, setTimeRemaining] = useState("");
+  const [opened, setOpened] = useState([]); // Jours ouverts
+  const [selectedDay, setSelectedDay] = useState(null); // Jour sélectionné
+  const [timeRemaining, setTimeRemaining] = useState(""); // Temps restant pour le prochain jour
 
   const surprises = [
-    "🎁 Surprise 1 : 5x Bouteille d'eau",
-    "🎄 Surprise 2 : 5.000 $",
-    "🍫 Surprise 3 : 2x kit atm",
-    "📚 Surprise 4 : 100 Jus de cerise",
-    "🚀 Surprise 5 : 10.000 $",
-    "🌟 Surprise 6 : 5x kit atm",
-    "🎨 Surprise 7 : 3x kit de crochetage",
-    "🎉 Surprise 8 : 100 bouteille d'eau (matière première)",
-    "🏞 Surprise 9 : Reduction du quota de 200 bières",
-    "🍩 Surprise 10 : 15.000 $",
-    "🎶 Surprise 11 : Rien...",
-    "💡 Surprise 12 : -5% sur l'altmarket (seulement ce jour-ci)",
-    "🎤 Surprise 13 : Bijouterie : Reprise des bijoux à 180 (peut importe la quantité)",
-    "🎯 Surprise 14 : 1x Boombox",
-    "🎹 Surprise 15 : 20.000 $",
-    "🍕 Surprise 16 : 40x cigarette de contrebande",
-    "🎬 Surprise 17 : 250 Jus de cerise",
-    "🎲 Surprise 18 : Rien...",
-    "🎮 Surprise 19 : -10% sur l'altmarket (seulement ce jour-ci)",
-    "📷 Surprise 20 : 25.000 $",
-    "🎷 Surprise 21 : -15% sur l'altmarket (seulement ce jour-ci)",
-    "🍔 Surprise 22 : Rien...",
-    "🍷 Surprise 23 : Reduction du quota de 350 bières",
-    "🎅 Surprise 24 : -20% sur l'altmarket (seulement ce jour-ci)",
-    "🌟 Joyeux Noël ! : Déco et vas profiter de ta famille, tes amis ou qui tu veut...",
+    "🎁 Surprise 1",
+    "🎄 Surprise 2",
+    "🍫 Surprise 3",
+    "📚 Surprise 4",
+    "🚀 Surprise 5",
+    "🌟 Surprise 6",
+    "🎨 Surprise 7",
+    "🎉 Surprise 8",
+    "🏞 Surprise 9",
+    "🍩 Surprise 10",
+    "🎶 Surprise 11",
+    "💡 Surprise 12",
+    "🎤 Surprise 13",
+    "🎯 Surprise 14",
+    "🎹 Surprise 15",
+    "🍕 Surprise 16",
+    "🎬 Surprise 17",
+    "🎲 Surprise 18",
+    "🎮 Surprise 19",
+    "📷 Surprise 20",
+    "🎷 Surprise 21",
+    "🍔 Surprise 22",
+    "🍷 Surprise 23",
+    "🎅 Surprise 24",
+    "🌟 Joyeux Noël !",
   ];
 
   // Restaurer l'état des jours ouverts depuis les cookies au chargement
@@ -79,6 +79,13 @@ const Calendar = () => {
   }, [calculateTimeRemaining]);
 
   const handleOpen = (day) => {
+    // Empêcher de cliquer sur les jours passés
+    if (day < today) {
+      alert("Vous ne pouvez pas réclamer un jour passé !");
+      return;
+    }
+
+    // Ouvrir le jour si ce n'est pas déjà fait
     if (day <= today && !opened.includes(day)) {
       setOpened([...opened, day]);
       setSelectedDay(day);
@@ -99,7 +106,9 @@ const Calendar = () => {
               <div
                 key={day}
                 className={`day ${
-                  opened.includes(day)
+                  day < today
+                    ? "past" // Jour passé
+                    : opened.includes(day)
                     ? "opened"
                     : day <= today
                     ? "active"
@@ -123,10 +132,9 @@ const Calendar = () => {
       </div>
 
       {selectedDay !== null && (
-        <div className="surprise">{surprises[selectedDay - 1]}</div>
+        <div className="surprise">Surprise du jour : {surprises[selectedDay - 1]}</div>
       )}
 
-      {/* Footer */}
       <footer className="footer">Feareis - 2024</footer>
     </div>
   );
